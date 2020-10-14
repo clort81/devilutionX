@@ -950,7 +950,7 @@ int RowsCoveredByPanel()
 
 	int rows = PANEL_HEIGHT / TILE_HEIGHT;
 	if (!zoomflag) {
-		rows /= 2;
+		rows /= 1.5; // clort was 2
 	}
 
 	return rows;
@@ -969,8 +969,8 @@ void CalcTileOffset(int *offsetX, int *offsetY)
 		x = SCREEN_WIDTH % TILE_WIDTH;
 		y = VIEWPORT_HEIGHT % TILE_HEIGHT;
 	} else {
-		x = (SCREEN_WIDTH / 2) % TILE_WIDTH;
-		y = (VIEWPORT_HEIGHT / 2) % TILE_HEIGHT;
+		x = int(SCREEN_WIDTH / 1.5) % TILE_WIDTH; // clort was 2
+		y = int(VIEWPORT_HEIGHT / 1.5) % TILE_HEIGHT; // clort was 2
 	}
 
 	if (x)
@@ -1000,14 +1000,14 @@ void TilesInView(int *rcolumns, int *rrows)
 
 	if (!zoomflag) {
 		// Half the number of tiles, rounded up
-		if (columns & 1) {
+		if (int(columns/1.5) & 1) { // clort
 			columns++;
 		}
 		columns /= 2;
 		if (rows & 1) {
 			rows++;
 		}
-		rows /= 2;
+		rows /= 1.5; // clort
 	}
 
 	*rcolumns = columns;
@@ -1096,12 +1096,12 @@ static void DrawGame(int x, int y)
 			if (chrflag || questlog) {
 				ShiftGrid(&x, &y, 2, 0);
 				columns -= 4;
-				sx += SPANEL_WIDTH - TILE_WIDTH / 2;
+				sx += SPANEL_WIDTH - TILE_WIDTH / 1.5; // clort was 2
 			}
 			if (invflag || sbookflag) {
 				ShiftGrid(&x, &y, 2, 0);
 				columns -= 4;
-				sx += -TILE_WIDTH / 2;
+				sx += -TILE_WIDTH / 1.5;
 			}
 		} else {
 			if (chrflag || questlog) {
